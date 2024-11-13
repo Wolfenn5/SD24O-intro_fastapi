@@ -149,11 +149,11 @@ def insertar_usuario(usuario:UsuarioBase):
 def actualizar_disponibilidad_libro(id:int, libro:LibroBase): # primero se pone el parametro de ruta y despues el de cuerpo SIEMPRE el id y el objeto que contiene todo lo de libros
     # libros[id] en si es un libro de la BD
     # libro es la informacion nueva que manda el usuario
-    libros[id].titulo = libro.titulo
-    libros[id].autor = libro.autor
-    libros[id].unidades = libro.unidades
-    libros[id].unidades_disponibles = libro.unidades_disponibles
+    libros[id]['titulo'] = libro.titulo
+    libros[id]['autor'] = libro.autor
+    libros[id]['unidades'] = libro.unidades
+    libros[id]['unidades_disponibles'] = libro.unidades_disponibles
     respuesta = {
-        "mensaje": "Se actualizo la disponibilidad" + id
+        "mensaje": "Se actualizo la disponibilidad" 
     }
     return respuesta
