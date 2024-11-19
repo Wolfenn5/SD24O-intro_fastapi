@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from bd_biblioteca import libros, usuarios
 from pydantic import BaseModel #BaseModel para tablas
+from typing import  Optional # es para poder usar el tipo de datos none
 
 # /docs para la interfaz de fast api -> 127.0.0.../docs
 # Una operacion idempotente en si se cosidera un evento, por ejemplo un get siempre va a dar lo mismo
@@ -10,7 +11,9 @@ from pydantic import BaseModel #BaseModel para tablas
 # El parametro de ruta es '/algo' -> http:/distribuidos.com/algo
 # El parametro de cuerpo es como el que esta en    def insertar_libro(libro:LibroBase):
 # El orden de los parametros SIEMPRE es primero el de ruta y luego el de cuerpo 
-
+# Los query strings se mandan en la URL y los parametros tambien
+# Los parametros de consulta dicen de que forma se quiere que se devuelvan, por ejemplo orden ascendente, descendente
+# Los parametros de ruta dicen que quiere que se devuelva por ejemplo libros/2
 
 app = FastAPI()
 
@@ -25,8 +28,9 @@ def bienvenida():
 #Metodo Get
 #URL '/libros'
 #devuelva la lista de libros
+# este indica COMO se quiere que se devuelva la informacion
 @app.get('/libros')
-def lista_libros():
+def lista_libros(pagina:int, orden:Optional[str]=None, lote:int=10): # Query string: parametros -> de pagina, ascendente, desc, cuantos libros donde lote viene por default en 10
     print("Atendiendo GET '/libros'")
     respuesta = libros
     return respuesta
@@ -35,6 +39,7 @@ def lista_libros():
 #URL '/libros/{id}'
 #devuelve un json
 #parametro de ruta id
+# este indica QUE informacion quiere que se devuelva
 @app.get('/libros/{id}')
 def informacion_libro(id:int):
     print("Atendiendo GET /libros/",id)
